@@ -6,11 +6,11 @@ const MongoModels = require('mongo-models');
 
 
 class AuthAttempt extends MongoModels {
-    static create(ip, username, callback) {
+    static create(ip, email, callback) {
 
         const document = {
             ip,
-            username: username.toLowerCase(),
+            email: email.toLowerCase(),
             time: new Date()
         };
 
@@ -24,7 +24,7 @@ class AuthAttempt extends MongoModels {
         });
     }
 
-    static abuseDetected(ip, username, callback) {
+    static abuseDetected(ip, email, callback) {
 
         const self = this;
 
@@ -38,7 +38,7 @@ class AuthAttempt extends MongoModels {
 
                 const query = {
                     ip,
-                    username: username.toLowerCase()
+                    email: email.toLowerCase()
                 };
 
                 self.count(query, done);
@@ -64,15 +64,15 @@ AuthAttempt.collection = 'authAttempts';
 
 AuthAttempt.schema = Joi.object({
     _id: Joi.object(),
-    username: Joi.string().lowercase().required(),
+    email: Joi.string().email().lowercase().required(),
     ip: Joi.string().required(),
     time: Joi.date().required()
 });
 
 
 AuthAttempt.indexes = [
-    { key: { ip: 1, username: 1 } },
-    { key: { username: 1 } }
+    { key: { ip: 1, email: 1 } },
+    { key: { email: 1 } }
 ];
 
 

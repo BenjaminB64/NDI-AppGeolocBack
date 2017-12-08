@@ -21,7 +21,7 @@ internals.applyRoutes = function (server, next) {
         config: {
             validate: {
                 payload: {
-                    name: Joi.string().required(),
+                    name: Joi.string(),
                     email: Joi.string().email().lowercase().required(),
                     username: Joi.string().token().lowercase().required(),
                     password: Joi.string().required()
@@ -86,7 +86,7 @@ internals.applyRoutes = function (server, next) {
                 },
                 account: ['user', function (results, done) {
 
-                    const name = request.payload.name;
+                    const name = request.payload.username;
 
                     Account.create(name, done);
                 }],

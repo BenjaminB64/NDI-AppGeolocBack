@@ -28,15 +28,15 @@ const config = {
     cookieSecret: {
         $filter: 'env',
         production: process.env.COOKIE_SECRET,
-        $default: '!k3yb04rdK4tz~4qu4~k3yb04rdd0gz!'
+        $default: '!k3yb0ootz~4qu4~k3yb0oodd0gz!'
     },
     hapiMongoModels: {
         mongodb: {
             uri: {
                 $filter: 'env',
                 production: process.env.MONGODB_URI,
-                test: 'mongodb://localhost:27017/frame-test',
-                $default: 'mongodb://localhost:27017/frame'
+                test: 'mongodb://localhost:27017/geololo-test',
+                $default: 'mongodb://localhost:27017/geololo'
             }
         },
         autoIndex: true
@@ -46,7 +46,7 @@ const config = {
         port: 465,
         secure: true,
         auth: {
-            user: 'jedireza@gmail.com',
+            user: '..',
             pass: process.env.SMTP_PASSWORD
         }
     },

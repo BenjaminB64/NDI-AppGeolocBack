@@ -22,7 +22,7 @@ internals.applyRoutes = function (server, next) {
         config: {
             validate: {
                 payload: {
-                    username: Joi.string().lowercase().required(),
+                    email: Joi.string().email().lowercase().required(),
                     password: Joi.string().required()
                 }
             },
@@ -31,9 +31,9 @@ internals.applyRoutes = function (server, next) {
                 method: function (request, reply) {
 
                     const ip = request.info.remoteAddress;
-                    const username = request.payload.username;
+                    const email = request.payload.email;
 
-                    AuthAttempt.abuseDetected(ip, username, (err, detected) => {
+                    AuthAttempt.abuseDetected(ip, email, (err, detected) => {
 
                         if (err) {
                             return reply(err);
@@ -50,10 +50,10 @@ internals.applyRoutes = function (server, next) {
                 assign: 'user',
                 method: function (request, reply) {
 
-                    const username = request.payload.username;
+                    const email = request.payload.email;
                     const password = request.payload.password;
 
-                    User.findByCredentials(username, password, (err, user) => {
+                    User.findByCredentials(email, password, (err, user) => {
 
                         if (err) {
                             return reply(err);
@@ -71,15 +71,15 @@ internals.applyRoutes = function (server, next) {
                     }
 
                     const ip = request.info.remoteAddress;
-                    const username = request.payload.username;
+                    const email = request.payload.email;
 
-                    AuthAttempt.create(ip, username, (err, authAttempt) => {
+                    AuthAttempt.create(ip, email, (err, authAttempt) => {
 
                         if (err) {
                             return reply(err);
                         }
 
-                        return reply(Boom.badRequest('Username and password combination not found or account is inactive.'));
+                        return reply(Boom.badRequest('Email and password combination not found or account is inactive.'));
                     });
                 }
             }, {
